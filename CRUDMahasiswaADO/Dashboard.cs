@@ -118,6 +118,60 @@ namespace CRUDMahasiswaADO
             chartProdi.Legends.Add(legend);
         }
 
-        
+        private void dtpTanggalMasuk_ValueChanged(object sender, EventArgs e)
+        {
+            // Kosongkan saja jika tidak ada aksi otomatis yang diinginkan saat tanggal berubah
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            button = 1;
+            loadDataChart();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            button = 0;
+            loadDataChart();
+        }
+
+        private void cmbTipe_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isInitializing) return;
+
+            if (button == 1)
+            {
+                loadDataChart();
+            }
+            else
+            {
+                loadDataChart();
+            }
+        }
+
+        private void chartProdi_Click(object sender, EventArgs e)
+        {
+            // Kosongkan
+        }
+
+        private void btnDataMhs_Click(object sender, EventArgs e)
+        {
+            // CATATAN: Pastikan 'Form1' diganti dengan nama Form Mahasiswa kamu yang sebenarnya.
+            // Misalnya jika form kamu bernama 'frmMahasiswa', maka ubah menjadi:
+            // frmMahasiswa frm1 = new frmMahasiswa();
+            Form1 frm1 = new Form1();
+            frm1.Show();
+            this.Hide();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
