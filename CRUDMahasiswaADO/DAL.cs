@@ -121,6 +121,73 @@ namespace CRUDMahasiswaADO
             cmd.ExecuteNonQuery();
         }
 
+        public void resetData()
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            string deleteQuery = "DELETE FROM mahasiswa;";
+            SqlCommand cmdDelete = new SqlCommand(deleteQuery, conn);
+            cmdDelete.ExecuteNonQuery();
+
+            string insertQuery = @"INSERT INTO mahasiswa SELECT * FROM Mahasiswa_Backup;";
+            SqlCommand cmdInsert = new SqlCommand(insertQuery, conn);
+            cmdInsert.ExecuteNonQuery();
+        }
+
+        public void testInject(string nim)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            string query = "Update mahasiswa set nama = 'HACKED' where NIM = " + nim;
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.ExecuteNonQuery();
+        }
+
+        public DataTable GetMhsByNIM(string nim)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            SqlCommand cmd = new SqlCommand("sp_GetMahasiswaByNIM", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@pNIM", nim);
+
+            da = new SqlDataAdapter(cmd);
+            dtMahasiswa = new DataTable();
+            da.Fill(dtMahasiswa);
+            return dtMahasiswa;
+        }
+
+        public void InsertLog(string message)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            SqlCommand cmd = new SqlCommand("sp_LogMessage", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@psn", message);
+            cmd.ExecuteNonQuery();
+        }
+
+        public DataTable getProdi()
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            SqlCommand cmd = new SqlCommand("select NamaProdi from ProgramStudi", conn);
+            cmd.CommandType = CommandType.Text;
+            dtProdi = new DataTable();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(dtProdi);
+            return dtProdi;
+        }
+
+        public DataTable getDataRekap(string prodi, DateTime tanggalMasuk)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            SqlCommand cmd = new SqlCommand("sp_Report", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@inProdi", prodi);
+            cmd.Parameters.AddWithValue("@inTglMsuk", tanggalMasuk.Year.ToString());
+
+            da = new SqlDataAdapter(cmd);
+            dtMahasiswa = new DataTable();
+            da.Fill(dtMahasiswa);
+            return dtMahasiswa;
+        }
+
         
     }
 }
