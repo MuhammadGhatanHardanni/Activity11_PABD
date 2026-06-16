@@ -88,6 +88,30 @@ namespace CRUDMahasiswaADO
             }
         }
 
+        public void UpdateMhs(string nim, string nama, string alamat, string jeniskelamin, DateTime tanggallahir, string kodeProdi, byte[] foto)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            SqlCommand command = new SqlCommand("sp_UpdateMahasiswa", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@pNIM", nim);
+            command.Parameters.AddWithValue("@pNama", nama);
+            command.Parameters.AddWithValue("@pAlamat", alamat);
+            command.Parameters.AddWithValue("@pJenisKelamin", jeniskelamin);
+            command.Parameters.AddWithValue("@pTanggalLahir", tanggallahir);
+            command.Parameters.AddWithValue("@pKodeProdi", kodeProdi);
+
+            // PERBAIKAN: Deklarasi parameter tipe VarBinary secara eksplisit
+            SqlParameter fotoParam = new SqlParameter("@pFoto", SqlDbType.VarBinary);
+            if (foto != null)
+                fotoParam.Value = foto;
+            else
+                fotoParam.Value = DBNull.Value;
+
+            command.Parameters.Add(fotoParam);
+
+            command.ExecuteNonQuery();
+        }
+
         
     }
 }
