@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL.cs" />
-    <Compile Include="Dashboard.cs" />
+    <Compile Include="Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
