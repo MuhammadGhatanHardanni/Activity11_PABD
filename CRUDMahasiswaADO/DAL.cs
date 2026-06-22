@@ -37,7 +37,7 @@ namespace CRUDMahasiswaADO
         }
 
         // 2. UPDATE CONNECTION STRING MENGGUNAKAN FUNGSI DI ATAS
-        static string connectionString = $"Data Source={GetLocalIPAddress()}\\GHATANHARDANNI; Initial Catalog=DB_AkademikADO; User ID=sa; Password=12345678;";
+        static string connectionString = $"Data Source=LAPTOP-VL5SDNPR\\GHATANHARDANNI; Initial Catalog=DB_AkademikADO; User ID=sa; Password=12345678;";
 
         public string GetConnectionString()
         {
